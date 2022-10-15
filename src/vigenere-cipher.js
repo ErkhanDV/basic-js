@@ -52,19 +52,21 @@ class VigenereCipheringMachine {
   constructor(type = true) {
     this.type = type;
   }
-  encrypt(str, word) {
-    if (str === undefined || word === undefined) {
+  encrypt(string, secretWord) {
+    if (!string || !secretWord) {
       throw new Error('Incorrect arguments!');
     }
+    const str = string.toLowerCase();
+    const word = secretWord.toLowerCase();
     let newStr = '';
     for (let i = 0, k = 0; i < str.length; i++, k++) {
       if (k == word.length) {
         k = k - word.length;
       }
-      if (alphabet.indexOf(str[i].toLowerCase()) != -1) {
-        const index = alphabet.indexOf(str[i].toLowerCase()) + alphabet.indexOf(word[k].toLowerCase()) > 25 ?
-          alphabet.indexOf(str[i].toLowerCase()) + alphabet.indexOf(word[k].toLowerCase()) - 26 :
-          alphabet.indexOf(str[i].toLowerCase()) + alphabet.indexOf(word[k].toLowerCase());
+      if (alphabet.indexOf(str[i]) != -1) {
+        const index = alphabet.indexOf(str[i]) + alphabet.indexOf(word[k]) > 25 ?
+          alphabet.indexOf(str[i]) + alphabet.indexOf(word[k]) - 26 :
+          alphabet.indexOf(str[i]) + alphabet.indexOf(word[k]);
         newStr += alphabet[index];
       } else {
         newStr += str[i];
@@ -73,19 +75,21 @@ class VigenereCipheringMachine {
     }
     return this.type == true ? newStr.toUpperCase() : newStr.toUpperCase().split('').reverse().join('');
   }
-  decrypt(str, word) {
-    if (str === undefined || word === undefined) {
+  decrypt(string, secretWord) {
+    if (!string || !secretWord) {
       throw new Error('Incorrect arguments!');
     }
+    const str = string.toLowerCase();
+    const word = secretWord.toLowerCase();
     let newStr = '';
     for (let i = 0, k = 0; i < str.length; i++, k++) {
       if (k == word.length) {
         k = k - word.length;
       }
-      if (alphabet.indexOf(str[i].toLowerCase()) != -1) {
-        const index = alphabet.indexOf(str[i].toLowerCase()) - alphabet.indexOf(word[k].toLowerCase()) < 0 ?
-          alphabet.indexOf(str[i].toLowerCase()) - alphabet.indexOf(word[k].toLowerCase()) + 26 :
-          alphabet.indexOf(str[i].toLowerCase()) - alphabet.indexOf(word[k].toLowerCase());
+      if (alphabet.indexOf(str[i]) != -1) {
+        const index = alphabet.indexOf(str[i]) - alphabet.indexOf(word[k]) < 0 ?
+          alphabet.indexOf(str[i]) - alphabet.indexOf(word[k]) + 26 :
+          alphabet.indexOf(str[i]) - alphabet.indexOf(word[k]);
         newStr += alphabet[index];
       } else {
         newStr += str[i];
